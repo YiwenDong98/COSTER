@@ -46,7 +46,7 @@ public class NonCompilableCodeExtraction {
                 String apiElement = varName.getIdentifier();
                 int linenumber = varDecNode.getStartPosition();
                 String actualFQN = "";
-                APIElement fieldDecleration = new APIElement(apiElement,inputfilepath,linenumber,actualFQN);
+                APIElement fieldDecleration = new APIElement(varDecNode, apiElement,inputfilepath,linenumber,actualFQN);
 
                 CompilableCodeExtraction.getFieldContext(fieldDecleration,block,varDecNode.toString());
                 this.identifiers.put(apiElement,fieldDecleration);
@@ -66,7 +66,7 @@ public class NonCompilableCodeExtraction {
                     if (!identifiers.containsKey(apiElement)){
                         int linenumber = assignmentNode.getStartPosition();
                         String actualFQN = "";
-                        APIElement fieldImplementation = new APIElement(apiElement,inputfilepath,linenumber,actualFQN);
+                        APIElement fieldImplementation = new APIElement(assignmentNode, apiElement,inputfilepath,linenumber,actualFQN);
 
                         CompilableCodeExtraction.getFieldContext(fieldImplementation,block,assignmentNode.toString());
                         this.identifiers.put(apiElement,fieldImplementation);
@@ -90,7 +90,7 @@ public class NonCompilableCodeExtraction {
                     String apiExpression = expression.toString()+"."+invocationnode.getName().getIdentifier();
                     int linenumber = invocationnode.getStartPosition();
                     String actualFQN = "";
-                    APIElement methodInvocation = new APIElement(apiElement,inputfilepath,linenumber,actualFQN);
+                    APIElement methodInvocation = new APIElement(invocationnode, apiElement,inputfilepath,linenumber,actualFQN);
                     CompilableCodeExtraction.getMethodContext(methodInvocation,block,apiExpression,expression.toString());
                     if(methodInvocation.getContext().size() > 5)
                         apiElements.add(methodInvocation);

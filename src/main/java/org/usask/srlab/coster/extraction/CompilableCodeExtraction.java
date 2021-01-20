@@ -145,7 +145,7 @@ public class CompilableCodeExtraction {
                                 if(actualFQN == null)
                                     return true;
 
-                                APIElement fieldDecleration = new APIElement(apiElement,compileUnit.getFilePath(),linenumber,actualFQN);
+                                APIElement fieldDecleration = new APIElement(varDecNode, apiElement,compileUnit.getFilePath(),linenumber,actualFQN);
 
                                 getFieldContext(fieldDecleration,block,varDecNode.toString());
                                 this.identifiers.put(apiElement,fieldDecleration);
@@ -174,7 +174,7 @@ public class CompilableCodeExtraction {
                                         if(actualFQN == null)
                                             return true;
 
-                                        APIElement fieldImplementation = new APIElement(apiElement,compileUnit.getFilePath(),linenumber,actualFQN);
+                                        APIElement fieldImplementation = new APIElement(assignmentNode, apiElement,compileUnit.getFilePath(),linenumber,actualFQN);
 
                                         getFieldContext(fieldImplementation,block,assignmentNode.toString());
                                         this.identifiers.put(apiElement,fieldImplementation);
@@ -206,7 +206,7 @@ public class CompilableCodeExtraction {
                                     if(actualFQN == null)
                                         return true;
 
-                                    APIElement methodInvocation = new APIElement(apiElement,compileUnit.getFilePath(),linenumber,actualFQN);
+                                    APIElement methodInvocation = new APIElement(invocationnode, apiElement,compileUnit.getFilePath(),linenumber,actualFQN);
                                     getMethodContext(methodInvocation,block,apiExpression,expression.toString());
                                     if(methodInvocation.getContext().size() > 5)
                                         apiElements.add(methodInvocation);

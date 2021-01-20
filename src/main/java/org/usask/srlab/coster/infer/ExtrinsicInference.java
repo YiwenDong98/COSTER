@@ -28,6 +28,8 @@ public class ExtrinsicInference {
 
     public static void evaluation(){
         List<APIElement> testCases = new ArrayList<>();
+        print("Modified by SnR");
+        logger.info("Modified by SnR");
         if(COSTER.getIsExtraction()) {
             print("Collecting Jar files...");
             logger.info("Collecting Jar Files...");

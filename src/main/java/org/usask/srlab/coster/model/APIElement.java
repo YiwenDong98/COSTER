@@ -1,5 +1,7 @@
 package org.usask.srlab.coster.model;
 
+import org.eclipse.jdt.core.dom.ASTNode;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +14,7 @@ public class APIElement {
     private List<String> localContext;
     private List<String> globalContext;
     private String actualFQN;
+    private ASTNode astNode;
 
     public APIElement() {
         context = new ArrayList<>();
@@ -19,7 +22,7 @@ public class APIElement {
         globalContext = new ArrayList<>();
     }
 
-    public APIElement(String name,String fileName, int lineNumber, String actualFQN) {
+    public APIElement(ASTNode astNode, String name, String fileName, int lineNumber, String actualFQN) {
         this.name = name;
         this.fileName = fileName;
         this.lineNumber = lineNumber;
@@ -27,6 +30,7 @@ public class APIElement {
         context = new ArrayList<>();
         localContext = new ArrayList<>();
         globalContext = new ArrayList<>();
+        this.astNode = astNode;
     }
 
     public APIElement(String name, String fileName, int lineNumber, List<String> context, List<String> localContext, List<String> globalContext, String actualFQN) {
@@ -96,6 +100,10 @@ public class APIElement {
 
     public void setActualFQN(String actualFQN) {
         this.actualFQN = actualFQN;
+    }
+
+    public ASTNode getAstNode() {
+        return astNode;
     }
 
     @Override
