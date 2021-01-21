@@ -20,7 +20,7 @@ public class EvaluationUtil {
 
     public EvaluationUtil(List<TestResult> results){
         CSVWriter writer = null;
-        String snRBenchOutPath = System.getenv("SnRbench_out_path");
+        String snRBenchOutPath = System.getenv("coster_stat_path");
         if (snRBenchOutPath != null) {
             try {
                 writer = new CSVWriter(new FileWriter(snRBenchOutPath), ',', '"', '\\', "\n");
