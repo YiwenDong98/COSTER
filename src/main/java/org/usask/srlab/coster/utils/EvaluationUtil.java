@@ -37,13 +37,18 @@ public class EvaluationUtil {
             System.out.println("For API Element: " + result.getApiElement().toString());
             System.out.println("Rec FQN: " + result.getRecommendations().stream().map(OLDEntry::getFqn).collect(Collectors.toList()));
             if (writer != null) {
+                String topRec = "";
+                if (result.getRecommendations().size() > 0) {
+                    topRec = result.getRecommendations().get(0).getFqn();
+                }
                 writer.writeNext(new String[]{
                         Paths.get(result.getApiElement().getFileName()).getFileName().toString(),
                         String.valueOf(result.getApiElement().getLineNumber()),
                         result.getApiElement().getActualFQN(),
                         String.valueOf(result.getApiElement().getAstNode().getStartPosition()),
                         String.valueOf(result.getApiElement().getAstNode().getLength()),
-                        result.getApiElement().getAstNode().toString()});
+                        result.getApiElement().getAstNode().toString(),
+                        topRec});
             }
 
 //            Set<String> predictedFQNs = result.getRecommendations().keySet();
