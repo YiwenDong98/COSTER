@@ -4,6 +4,8 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javafx.util.Pair;
 
@@ -282,6 +284,47 @@ public class FileUtil {
 		}
 		return lstResults;
 
+	}
+	
+	/**
+     * Copied from plugin
+	 */
+    public synchronized HashMap<String, List<String>> getFQNLibararyMapping(String fp) {
+		ArrayList<File> allFiles = getFiles(new File(fp));
+		HashMap<String, List<String>> contents = new HashMap<>();
+		for(File eachFile:allFiles)
+			contents = getDictonaryFileMap(new File(eachFile.getAbsolutePath()),contents);
+		return contents;
+    }
+	private synchronized HashMap<String,List<String>> getDictonaryFileMap(File fp, HashMap<String, List<String>> contents) {
+		try {
+			try (BufferedReader br = new BufferedReader(new FileReader(fp))) {
+				String line;
+				String fileName = fp.getName();
+				Pattern pattern = Pattern.compile("(\\S+-)(\\d+(\\.\\d+)?)?");
+				Matcher matcher = pattern.matcher(fileName);
+		        if (matcher.find()) {
+		        	fileName = matcher.group(1).substring(0,matcher.group(1).length()-1);		          
+		        }
+				while ((line = br.readLine()) != null) {
+					if(!line.trim().isEmpty()) {
+						if(contents.containsKey(line.trim())) {
+							List<String> curValue = contents.get(line.trim());
+							curValue.add(fileName);
+							contents.put(line.trim(), curValue);
+						}
+						else {
+							List<String> newValue = new ArrayList<>();
+							newValue.add(fileName);
+							contents.put(line.trim(),newValue);
+						}
+					}
+				}
+			}
+		} catch (Exception ex) {
+			// ex.printStackTrace();
+		}
+		return contents;
 	}
 
 }
